@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgClass, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth/auth.service';
@@ -22,6 +22,7 @@ import { LoaderComponent } from '../../../shared/loader/loader.component';
 export class LoginComponent implements OnInit {
   private readonly _formBuilder: FormBuilder = inject(FormBuilder);
   private readonly _authService: AuthService = inject(AuthService);
+  private readonly _router: Router = inject(Router);
 
   loginForm!: FormGroup;
   isPasswordToggled: WritableSignal<boolean> = signal(false);
@@ -51,8 +52,9 @@ export class LoginComponent implements OnInit {
       this.isLoading.set(true);
       this.loginForm.disable();
       this._authService.login(this.loginForm.value as LoginCredentials).subscribe({
-        next: () => {
+        next: (user) => {
           this.isLoading.set(false);
+          this._router.navigate(['/dashboard']).then(r => r);
         },
         error: err => {
           console.log('ERROR WHEN LOGIN : ', err);

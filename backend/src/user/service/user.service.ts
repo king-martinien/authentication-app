@@ -3,12 +3,13 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dto/create-user.dto';
-import { catchError, from, map, switchMap } from 'rxjs';
+import { catchError, from, map, Observable, switchMap } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -51,6 +52,17 @@ export class UserService {
           err.stack,
         );
         throw new InternalServerErrorException();
+      }),
+    );
+  }
+
+  getUserByEmail(email: string): Observable<User> {
+    return from(this._userRepository.findOneBy({ email })).pipe(
+      switchMap(async (user) => {
+        if (!user) {
+          throw new NotFoundException(`User not found with email ${email}`);
+        }
+        return user;
       }),
     );
   }

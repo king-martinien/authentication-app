@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/components/login/login.component';
 import { SignupComponent } from './auth/components/signup/signup.component';
+import { authGuard } from './auth/guards/auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -13,7 +14,17 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'dashboard',
+    loadComponent: () => import('./dashboard/dashboard.component').then(r => r.DashboardComponent),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'not-found',
+    loadComponent: () => import('./page-not-found/page-not-found.component').then(r => r.PageNotFoundComponent),
+  },
+  {
     path: '**',
-    loadComponent: () => import('./page-not-found/page-not-found.component').then((r) => r.PageNotFoundComponent),
+    redirectTo: 'not-found',
+    pathMatch: 'full',
   },
 ];
