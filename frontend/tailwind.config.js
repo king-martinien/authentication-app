@@ -10,6 +10,7 @@ module.exports = {
       'clr-text-light': '#828282',
       'clr-primary': '#2F80ED',
       'clr-gray': '#BDBDBD',
+      'clr-gray-light':'#F8F8F8',
       'clr-white': '#FFFFFF',
       'clr-error': '#EE4A44',
     },

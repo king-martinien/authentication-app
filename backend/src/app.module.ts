@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule.forRoot({
       envFilePath: [`environment/.env.${process.env.STAGE}`],
       validationSchema: configValidationSchema,
+      isGlobal: true,
     }),
     UserModule,
     AuthModule,
