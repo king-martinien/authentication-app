@@ -69,4 +69,9 @@ export class SignupComponent implements OnInit {
 
     }
   }
+
+  handleGoogleSignin() {
+    console.log('calling handle...');
+    return this._authService.googleSignin();
+  }
 }

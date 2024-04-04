@@ -66,4 +66,29 @@ export class UserService {
       }),
     );
   }
+
+  createUserWithGoogle(createUseDto: CreateUserDto) {
+    const { email } = createUseDto;
+    return from(this._userRepository.findOneBy({ email })).pipe(
+      switchMap(async (user) => {
+        if (user) {
+          this._logger.verbose(
+            `There is already a user with email ${email} => Signin in the user...`,
+          );
+          return user;
+        } else {
+          this._logger.verbose(
+            `There is not a user with email ${email} => Creating the user...`,
+          );
+          return this.saveUser(createUseDto);
+        }
+      }),
+    );
+  }
+
+  saveUser(createUserDto: CreateUserDto) {
+    const { email, fullname } = createUserDto;
+    const newUser: User = this._userRepository.create({ email, fullname });
+    return this._userRepository.save(newUser);
+  }
 }

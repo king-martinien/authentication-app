@@ -6,12 +6,16 @@ import {
   HttpStatus,
   Logger,
   Post,
+  Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from '../../user/dto/create-user.dto';
 import { AuthService } from '../service/auth.service';
 import { LoginCredentialsDto } from '../dto/login-credentials.dto';
 import { JwtGuard } from '../guard/jwt.guard';
+import { GoogleGuard } from '../guard/google.guard';
+import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -35,13 +39,15 @@ export class AuthController {
   }
 
   @Get('google/signin')
+  @UseGuards(GoogleGuard)
   googleSignin() {
     return { response: 'Google Signin' };
   }
 
   @Get('google/redirect')
-  googleRedirect() {
-    return { response: 'Google Redirect' };
+  @UseGuards(GoogleGuard)
+  googleRedirect(@Req() req: Request, @Res() res: Response) {
+    return this._authService.googleSignin(req.user as CreateUserDto, res);
   }
 
   @Get('test')

@@ -14,9 +14,9 @@
         </svg>
       </label>
       <input type="text" id="fullname" name="fullname" placeholder="Full Name" formControlName="fullname"
-             class="h-12 w-full pl-12 border-2 rounded-lg focus:border-clr-primary focus-visible:outline-none focus-visible:ring-0 duration-500 transition-colors"
+             class="h-12 w-full pl-12 border-2 rounded-lg focus-visible:outline-none focus-visible:ring-0 duration-500 transition-colors"
              [ngClass]="[isFormSubmitted() && f['fullname'].errors ? 'border-clr-error focus:border-clr-error' :
-             'border-clr-gray/50']">
+             'border-clr-gray/50 focus:border-clr-primary']">
     </div>
     @if (isFormSubmitted() && f['fullname'].errors) {
       @if (f['fullname'].errors!['required']) {
@@ -49,7 +49,7 @@
       <input type="email" id="email" name="email" placeholder="Email" formControlName="email"
              class="h-12 w-full pl-12 border-2 rounded-lg focus:border-clr-primary focus-visible:outline-none focus-visible:ring-0 duration-500 transition-colors"
              [ngClass]="[isFormSubmitted() && f['email'].errors ? 'border-clr-error focus:border-clr-error' :
-             'border-clr-gray/50']">
+             'border-clr-gray/50 focus:border-clr-primary']">
     </div>
     @if (isFormSubmitted() && f['email'].errors) {
       @if (f['email'].errors!['required']) {
@@ -75,9 +75,9 @@
       </label>
       <input [type]="isPasswordToggled() ? 'text' : 'password'" id="password" name="password" placeholder="Password"
              formControlName="password"
-             class="h-12 pl-12 w-full border-2 rounded-lg focus:border-clr-primary focus-visible:outline-none focus-visible:ring-0 duration-500 transition-colors"
+             class="h-12 pl-12 w-full border-2 rounded-lg focus-visible:outline-none focus-visible:ring-0 duration-500 transition-colors"
              [ngClass]="[isFormSubmitted() && f['password'].errors ? 'border-clr-error focus:border-clr-error' :
-             'border-clr-gray/50']">
+             'border-clr-gray/50 focus:border-clr-primary']">
       <button type="button"
               class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 bg-clr-gray/0 rounded-full hover:bg-clr-gray/50 duration-300"
               (click)="togglePasswordVisibility()">
@@ -124,7 +124,7 @@
   <div class="text-clr-text-light text-sm flex flex-col items-center gap-4 text-center">
     <p>or continue with these social profile</p>
     <div class="flex items-center gap-3">
-      <a href="" aria-label="google">
+      <a (click)="handleGoogleSignin()" aria-label="google" class="cursor-pointer">
         <img ngSrc="assets/svgs/Google.svg" alt="google icon" width="43" height="43">
       </a>
       <a href="" aria-label="facebook">
