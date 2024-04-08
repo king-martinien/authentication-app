@@ -36,9 +36,8 @@ export class UserService {
           password: hashedPassword,
         });
         return from(this._userRepository.save(user)).pipe(
-          map((user) => {
+          map(() => {
             this._logger.log(`User ${email} Created SuccessFully`);
-            return user;
           }),
         );
       }),

@@ -2,7 +2,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthService } from '../service/auth.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../user/entity/user.entity';
 import { Repository } from 'typeorm';
@@ -11,7 +10,6 @@ import { Repository } from 'typeorm';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     _configService: ConfigService,
-    private readonly _authService: AuthService,
     @InjectRepository(User)
     private readonly _userRepository: Repository<User>,
   ) {

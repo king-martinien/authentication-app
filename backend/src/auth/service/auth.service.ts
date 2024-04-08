@@ -2,7 +2,6 @@ import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../../user/service/user.service';
 import { CreateUserDto } from '../../user/dto/create-user.dto';
 import { catchError, Observable, switchMap } from 'rxjs';
-import { User } from '../../user/entity/user.entity';
 import { LoginCredentialsDto } from '../dto/login-credentials.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -21,7 +20,7 @@ export class AuthService {
     private readonly _configService: ConfigService,
   ) {}
 
-  signup(createUserDto: CreateUserDto): Observable<User> {
+  signup(createUserDto: CreateUserDto): Observable<void> {
     return this._userService.createUser(createUserDto);
   }
 
@@ -68,7 +67,6 @@ export class AuthService {
   }
 
   validateUser(email: string) {
-    console.log('Validating the user...');
     return this._userService.getUserByEmail(email);
   }
 }

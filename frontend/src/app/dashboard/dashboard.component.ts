@@ -1,23 +1,28 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { DashboardService } from './service/dashboard/dashboard.service';
-import { NgOptimizedImage } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     NgOptimizedImage,
+    NgClass,
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
   private readonly _dashboardService: DashboardService = inject(DashboardService);
 
   testResponse = signal<string>('');
+  isNavbarOpen = this._dashboardService.isNavbarOpen;
 
   ngOnInit() {
     this.test();
+  }
+
+  toggleNavbar() {
+    this._dashboardService.toggleNavbar();
   }
 
   test() {

@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { User } from '../../model/user.interface';
+import { User } from '../../interfaces/user.interface';
 import { map, Observable } from 'rxjs';
-import { LoginCredentials } from '../../model/loginCredentials.interface';
-import { LoginResponse } from '../../model/loginResponse.interface';
+import { LoginCredentials } from '../../interfaces/loginCredentials.interface';
+import { LoginResponse } from '../../interfaces/loginResponse.interface';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class AuthService {
   private readonly _router: Router = inject(Router);
   private readonly baseApiUrl = environment.baseApiUrl;
 
-  signUp(user: Partial<User>): Observable<User> {
-    return this._http.post<User>(`${this.baseApiUrl}/auth/signup`, user);
+  signUp(user: Partial<User>): Observable<void> {
+    return this._http.post<void>(`${this.baseApiUrl}/auth/signup`, user);
   }
 
   login(loginCredentials: LoginCredentials): Observable<LoginResponse> {
@@ -34,10 +34,9 @@ export class AuthService {
 
   isUserLoggedIn() {
     const cookie = document.cookie.split(';').find(str => str.includes('accessToken'))?.split('=')[1].trim();
-    console.log('cookie : ', cookie);
     if (cookie) {
-      localStorage.setItem('ACCESS_TOKEN', cookie);
-      document.cookie = 'accessToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+      localStorage.setItem('ACCESS_TOKEN', cookie); // store the cookie in tje local Storage
+      document.cookie = 'accessToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT'; // delete the cookie
     }
     return localStorage.getItem('ACCESS_TOKEN') !== null;
   }

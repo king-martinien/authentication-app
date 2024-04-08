@@ -19,13 +19,13 @@
       </label>
       <input type="email" id="email" name="email" placeholder="Email" formControlName="email"
              class="h-12 w-full pl-12 border-2 rounded-lg focus:border-clr-primary focus-visible:outline-none focus-visible:ring-0 duration-500 transition-colors"
-             [ngClass]="[isFormSubmitted() && f['email'].errors ? 'border-clr-error focus:border-clr-error' :
+             [ngClass]="[isFormSubmitted() && f.email.errors ? 'border-clr-error focus:border-clr-error' :
              'border-clr-gray/50']">
     </div>
-    @if (isFormSubmitted() && f['email'].errors) {
-      @if (f['email'].errors!['required']) {
+    @if (isFormSubmitted() && f.email.errors) {
+      @if (f.email.errors!['required']) {
         <span class="text-sm text-clr-error">Email is required</span>
-      } @else if (f['email'].errors!['email']) {
+      } @else if (f.email.errors!['email']) {
         <span class="text-sm text-clr-error">Enter a valid Email</span>
       }
     }
@@ -47,7 +47,7 @@
       <input [type]="isPasswordToggled() ? 'text' : 'password'" id="password" name="password" placeholder="Password"
              formControlName="password"
              class="h-12 pl-12 w-full border-2 rounded-lg focus:border-clr-primary focus-visible:outline-none focus-visible:ring-0 duration-500 transition-colors"
-             [ngClass]="[isFormSubmitted() && f['password'].errors ? 'border-clr-error focus:border-clr-error' :
+             [ngClass]="[isFormSubmitted() && f.password.errors ? 'border-clr-error focus:border-clr-error' :
              'border-clr-gray/50']">
       <button type="button"
               class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 bg-clr-gray/0 rounded-full hover:bg-clr-gray/50 duration-300"
@@ -75,11 +75,9 @@
         }
       </button>
     </div>
-    @if (isFormSubmitted() && f['password'].errors) {
-      @if (f['password'].errors!['required']) {
+    @if (isFormSubmitted() && f.password.errors) {
+      @if (f.password.errors!['required']) {
         <span class="text-sm text-clr-error">Password is required</span>
-      } @else if (f['password'].errors!['pattern']) {
-        <span class="text-sm text-clr-error">Enter a valid Password</span>
       }
     }
   </div>
