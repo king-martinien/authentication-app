@@ -11,7 +11,7 @@ export class DashboardService {
   private readonly _http: HttpClient = inject(HttpClient);
   private readonly baseApiUrl = environment.baseApiUrl;
 
-  private isNavbarOpenedSignal: WritableSignal<boolean> = signal(true);
+  private isNavbarOpenedSignal: WritableSignal<boolean> = signal(false);
   readonly isNavbarOpen = this.isNavbarOpenedSignal.asReadonly();
 
 

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { DashboardService } from './service/dashboard/dashboard.service';
 import { NgClass, NgOptimizedImage } from '@angular/common';
+import { AuthService } from '../auth/service/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ import { NgClass, NgOptimizedImage } from '@angular/common';
 })
 export class DashboardComponent implements OnInit {
   private readonly _dashboardService: DashboardService = inject(DashboardService);
+  private readonly _authService: AuthService = inject(AuthService);
 
   testResponse = signal<string>('');
   isNavbarOpen = this._dashboardService.isNavbarOpen;
@@ -23,6 +25,10 @@ export class DashboardComponent implements OnInit {
 
   toggleNavbar() {
     this._dashboardService.toggleNavbar();
+  }
+
+  logOut() {
+    this._authService.logOut();
   }
 
   test() {
